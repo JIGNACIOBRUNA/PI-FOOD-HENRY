@@ -18,11 +18,14 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
+const { loadDietsDB } = require('./src/controllers/dietsControllers.js');
 const { conn } = require('./src/db.js');
+const { getTotalDiets } = require('./src/handlers/dietHanlders.js');
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
+conn.sync({ force: false }).then(() => {
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
+    
   });
 });

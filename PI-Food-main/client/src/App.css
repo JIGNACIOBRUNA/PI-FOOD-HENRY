@@ -13,6 +13,7 @@
   }
 }
 
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -26,6 +27,29 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.landing-bg {
+  /* background-image: url("https://www.latercera.com/resizer/f47ZW4CY4sv2mEd_L4s31nnCyN0=/900x600/smart/cloudfront-us-east-1.images.arcpublishing.com/copesa/VKUWOGNHINBPVFCUD4UOVUQFPQ.jpg"); */
+  background-image: url("https://cdn.foodandwineespanol.com/2021/05/libro-recuperado-covid-19-1536x864.jpg");
+  /*background-image:url("https://fondosmil.com/fondo/35741.jpg") ;*/
+  background-size: cover;
+  background-position: center;
+  background-attachment:fixed;
+  height: 100vh;
+  width: 100%;
+  overflow-y: hidden;
+  
+}
+
+.fondo{
+  background-image: url("https://wallpaperstock.net/libro-de-recetas-wallpapers_53636_1920x1200.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment:fixed;
+  height: 100vh;
+  width: 100%;
+  overflow-y: hidden;
 }
 
 @keyframes App-logo-spin {

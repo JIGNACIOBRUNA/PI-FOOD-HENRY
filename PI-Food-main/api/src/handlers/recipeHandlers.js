@@ -1,7 +1,35 @@
 const { UUID, INTEGER } = require("sequelize");
 const { v4: UUIDV4, validate } = require("uuid");
 const { Recipes, Diets } = require("../db");
-const { getRecipeById, createRecipe } = require("../controllers/recipeControllers");
+const { getRecipeById, createRecipe, getTotalRecipes, getApiRecipes } = require("../controllers/recipeControllers");
+
+
+const allRecipes = async (req, res) =>{
+    try {
+        const recipes = await getApiRecipes();
+        console.log(recipes);
+        res.status(200).json(recipes)
+      } catch (error) {
+        console.log(error);
+        res.status(400).send("Error al obtener las recetas");
+}
+}
+
+const getRecipeName = async (req, res) =>{
+    const{ name } = req.query;
+    const recipeTotal = await getTotalRecipes();
+    try {
+        if(!name){
+            res.status(400).send("Parametro incorrecto");
+        }else{
+            const recipeName = recipeTotal.filter(e => e.name.toLowerCase().includes(name.toLowerCase()))
+            recipeName.length ? res.status(200).json(recipeName) : res.status(404).send("El nombre de la receta no existe")
+        }
+    } catch (error) {
+        next(error)
+    }
+     
+};
 
 const getRecipeHandler = async(req, res) =>{
     const { idRecipe } = req.params;
@@ -10,67 +38,34 @@ const getRecipeHandler = async(req, res) =>{
         const recipe = await getRecipeById(idRecipe, origin);
         res.status(200).json(recipe);
     } catch (error) {
+        console.log(error);
         res.status(400).json({ error: "No se encontro la receta con el ID indicado" });
         
     }
-//     const idRecipe = req.params.idRecipe;
-//     // if(Number.isInteger(idRecipe)){
-//     //     console.log("Es un id valido numerico");
-//     // }else if(validate(idRecipe)){
-//     //     console.log("Es un id valido UUID");
-//     // }else{
-//     //     console.log("id invalido");
-//     //     return res.status(500).json({error: "id invalido"})
-//     // }
-//     // if(typeof idRecipe(INTEGER) || validate(idRecipe)){
-//     //     console.log("el tipo del id es valido");
-
-//     // }else{
-//     //     return res.status(400).json({error: "el tipo de id es invalido se espera un numerico o uuid"});
-//     // }
-//     try {// findByPk la utilizamos para buscar un registro en una tabla de DB por primaryKey
-//         const recipe = await Recipes.findByPk(idRecipe, { include: Diets});
-
-//         if(!recipe){
-//             return res.status(404).json({ mensaje: "Receta no encontrada"});
-//         }
-//         res.json(recipe);
-//      } catch (error) {
-//         res.status(500).json({ error: "Ocurrio un error al obtener el detalle de la receta"});  
-//        // next(error)
-// }
 };
 
-const getRecipeName = async (req, res) =>{
-    const { name } = req.query;
-    try {
-       const recipeFromApi = await getRecipeFromAPI(); //obtengo las recetas de la api
-       const recipeFromDB = await Recipes.findAll(); // obtengo recetas desde la DB
-        // junto las recetas desde la DB y la APi. Las filtro verificando si las recetas incluyen el valor name y lo dejo en minuscula con toLowerCase
-       const matchinRecipes = [...recipeFromApi, ...recipeFromDB]
-       .filter((recipe) => recipe.name.toLowerCase().includes(name.toLowerCase())); 
 
-       if(matchinRecipes.length > 0){
-        res.status(200).json(matchinRecipes);
-        console.log(matchinRecipes);
-       }else{
-        res.status(404).send("Receta no encontrada");
-       }
-    } catch (error) {
-        
-       res.status(500).json({error: "No existe la receta"}) 
-    }
-    //res.status(200).send("Estoy en getName porfin");
-};
 
 
 const postRecipe = async (req, res) =>{
     try {
-        const { id, name, image, summary, healthScore, stepByStep } = req.body;
-        const newRecipe = await createRecipe(id, name, image, summary, healthScore, stepByStep)
+        const { name, image, summary, healthScore, stepByStep, diets } = req.body;
+        const newRecipe = await createRecipe( name, image, summary, healthScore, stepByStep)
+        
+        //await associateDietsToRecipe(name, image, summary, healthScore, stepByStep);
+        //console.log(newRecipe);
+    //    const diets = await findDietsByName(diet);
+    //    await newRecipe.addDiets(diets);
+    const dietCreated = await Diets.findAll({
+        where:{
+            name: diets
+        }
+    })
+    newRecipe.addDiet(dietCreated)
         res.status(200).json(newRecipe);
+        console.log(newRecipe);
     } catch (error) {
-        //console.log(error)
+        console.log(error)
         res.status(400).send("No se creo la nueva receta");
     }
     // try {
@@ -98,5 +93,6 @@ const postRecipe = async (req, res) =>{
 module.exports = {
     getRecipeHandler,
     getRecipeName,
-    postRecipe
+    postRecipe,
+    allRecipes
 }
