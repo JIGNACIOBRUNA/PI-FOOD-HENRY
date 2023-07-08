@@ -4,38 +4,39 @@ import style from "./NavBar.module.css";
 import logo from "./logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { getRecipeName } from "../../redux/actions";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import CardsContainer from "../CardsContainer/CardsContainer";
+import { getRecipeName, changeCurrentPage } from "../../redux/actions";
+import SearchBar from "../Search/SearchBar";
 
 
-const NavBar = () => {
-    const dispatch = useDispatch();
-    // const [recipes, setRecipes] = useState([]);
-    const [name, setName] = useState("");
-    const recipes = useSelector((state) => state.recipes);
 
-    const handleChangeRecipe = (e) => {
-        e.preventDefault()
-        setName(e.target.value);
-        console.log('console.log1', e.target.value)
-    }
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        dispatch(getRecipeName(name));
-        // setName('');
-        // console.log("console.log3", setName);
-    }
-    console.log('console.log2', name)
+const NavBar = (props) => {
+    // const dispatch = useDispatch();
+    // const [recipes, setRecipes] = useState("");
+    // //nuevo
+    // // const recipes = useSelector((state) => state.recipes);
+
+    // const handleChangeName = (e) => {
+    //     e.preventDefault()
+    //     setRecipes(e.target.value);
+    //     console.log('console.log1', e.target.value)
+    // }
+    // const handleSubmit = (e) => {
+    //     e.preventDefault()
+    //     dispatch(getRecipeName(recipes));
+    //     // dispatch(changeCurrentPage(1));
+    //     // setName('');
+    //     // console.log("console.log3", setName);
+    // }
+    // console.log('console.log2', recipes)
 
     //metodo de filtrado
-    let results = []
-    if (!name) {
-        results = []
-    } else {
-        results = recipes.filter((dato) => dato.name.toLowerCase().includes(name.toLocaleLowerCase()))
-        console.log(results);
-    }
+    // let results = []
+    // if (!name) {
+    //     results = []
+    // } else {
+    //     results = recipes.filter((dato) => dato.name.toLowerCase().includes(name.toLocaleLowerCase()))
+    //     console.log(results);
+    // }
 
     return (
         <nav className={style.navbar}>
@@ -47,23 +48,13 @@ const NavBar = () => {
                 <Link to="/home">HOME</Link>
                 <Link to="/create">FORM</Link>
                 <Link to="/recipe/:id">DETAIL</Link>
-                {/* <Link to={`/recipe/?name=${name}`}>SEARCH</Link> */}
             </div>
-            <div className={style.search}>
-                <input type="text" placeholder="Search" value={name} onChange={e => handleChangeRecipe(e)} ></input>
-                {/* <Link to={`/recipe/?name=${name}`} > */}
+            {/* <div className={style.search}>
+                <input type="text" placeholder="Search" value={recipes} onChange={e => handleChangeName(e)} ></input>
                 <button className={style.button} type="submit" onClick={e => handleSubmit(e)}>Search</button>
-                {/* </Link>  */}
-            </div>
-            {/* <div className={style.results} style={{ display: name ? "block" : "none" }}>
-                {results.map((recipe) => (
-                    <div key={recipe.id}>
-                        <Link className={style.recipeName}>{recipe.name}</Link>
-                        <img src={recipe.image} alt="" className={style.image} />
-                        <h2 className={style.diet} >{recipe.diets}</h2>
-                    </div>
-                ))}
+               
             </div> */}
+           <SearchBar onSearch ={props.onSearch}/>
         </nav>
     )
 }

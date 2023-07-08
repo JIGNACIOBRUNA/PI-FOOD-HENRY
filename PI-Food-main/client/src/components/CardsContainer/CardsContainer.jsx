@@ -1,7 +1,7 @@
 import Card from "../Card/Card";
 import style from "./CardsContainer.module.css";
 import { useSelector } from "react-redux";
-import "./CardsContainer.module.css";
+
 
 //debe tomar un array de recipe y por cada recipe renderizar un componente Card
 const CardsContainer = ()=>{

@@ -26,4 +26,10 @@ export const getRecipeName = (nameRecipe) =>{
     }
 }
 
+export const changeCurrentPage = payload => {
+    return dispatch => {
+        dispatch({ type: 'CURRENT_PAGE', payload})
+    }
+};
+
 export default allRecipes

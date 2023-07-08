@@ -1,6 +1,6 @@
 import style from "./Card.module.css";
 import "./Card.module.css";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link } from "react-router-dom";
 
 
 //debe mostrar la info de cada recipe mapeado, ademas darnos un link para ir al detalle 

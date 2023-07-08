@@ -23,6 +23,7 @@ const Detail = () =>{
 
     return(
         <div key={id}>
+            <NavBar/>
         <h2>{detail.id}</h2>
         <h2>Name{detail.name}</h2>
         <img src={detail.image}/>

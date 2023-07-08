@@ -1,0 +1,83 @@
+.paginationConteiner{
+    display: flex;
+    justify-content: center;
+    padding: 10px 5px 5px;
+    width: 570px;
+}
+
+.pages{
+    display: flex;
+	height: 30px;
+    list-style-type:none;
+    justify-content: center;
+	padding: 5px 18px 5px;
+	border-radius: 7px;
+}
+
+.buttonPrevNext{
+    display: flex;
+	height: 30px;
+    list-style-type:none;
+    justify-content: center;
+	padding: 5px 10px 5px;
+	border-radius: 7px;
+    cursor: pointer;
+}
+
+
+.pagination{
+    cursor: pointer;
+    display: flex;    
+    justify-content: center;
+	background-color: rgb(231, 218, 218);
+    border-color: rgb(231, 218, 218);
+    box-shadow: 3px 5px 1px rgb(69, 68, 68);
+    color:  rgb(19, 19, 19);
+    font-style: italic;
+    font-weight: 900;    
+    text-shadow: 6px 4px 5px rgba(0,0,0,0.43);
+    border-radius: 7px;
+    height: 30px;
+    width: 32px;    
+	font-size: 15px;	
+	line-height: 25px;
+    font-weight: 600;
+    margin: 4px;
+    margin-top: -1px;
+   
+}
+
+.pages :hover{
+box-shadow: 0 4px 6px rgb(182, 180, 180);
+}
+
+.pagination-active{
+    cursor: pointer;
+    display: flex;    
+    justify-content: center;
+	background-color: rgb(92, 90, 90);
+    border-color: rgb(231, 218, 218);
+    box-shadow: 3px 5px 1px rgb(29, 29, 29);
+    color:  black;
+    font-style: italic;
+    font-weight: 700;    
+    text-shadow: 6px 4px 5px rgba(74, 73, 73, 0.43);
+    border-radius: 7px;
+    height: 30px;  
+    width: 32px;  
+	font-size: 15px;	
+	line-height: 25px;
+    font-weight: 600;
+    margin: 4px;
+    margin-top: -1px;
+}
+
+.card{
+    width: 85vw;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    /* flex-direction:row; */
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 20px;
+}
